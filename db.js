@@ -23,40 +23,37 @@ async function conectarBD()
 }
 
 
-async function listarCriancas()
-{
+async function listarCadastros(){
     const conexao = await conectarBD()
     const [registros] = await conexao.query('select * from criancas;')
     return registros
 }
 
-async function inserirPessoa(pessoa)
-{
+async function inserirInterno(interno) {
     const conexao = await conectarBD()
-    cri_Id, resp_Id, cri_nome, cri_RG, cri_CPF, cri_Nasc, cri_Status, resp_Nome, nis_BPC,  dataEntrada, dataSaida, motivo, cri_Encaminhado, cri_Acompanhamento, cri_NmroAutos, usuario_sexo
     const sql = "insert into criancas (cri_nome, cri_RG, cri_CPF, cri_Nasc, cri_Status, resp_Nome, nis_BPC,  dataEntrada, dataSaida, motivo, cri_Encaminhado, cri_Acompanhamento, cri_NmroAutos, usuario_sexo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
-    return await conexao.query(sql, [pessoa.nome, pessoa.idade, pessoa.cpf])
+    return await conexao.query(sql, [interno.nome, interno.rg, interno.cpf, interno.nasc, interno.stats, interno.respNome, interno.bpc, interno.entra, interno.sai, interno.motivo, interno.encaminhado, interno.acomp, interno.autos, interno.sexo])
 }
 
-async function apagarPessoa(codigo)
+async function apagarInterno(codigo)
 {
     const conexao = await conectarBD()
-    const sql = "delete from pessoas where id=?;"
+    const sql = "delete from criancas where id=?;"
     return await conexao.query(sql,[codigo])
 }
 
-async function recuperarPessoa(codigo)
+async function recuperarInterno(codigo)
 {
     const conexao = await conectarBD()
-    const sql = "select * from pessoas where id=?;"
+    const sql = "select * from criancas where id=?;"
     const [pessoa] = await conexao.query(sql,[codigo])
     return pessoa [0]
 }
 
-async function alterarPessoa(pessoa){
+async function alterarInterno(interno){
     const conexao = await conectarBD()
-    const sql = "UPDATE pessoas SET pernome=?,peridade=?, percpf=? WHERE id=?;"
-    return await conexao.query(sql,[pessoa.nome, pessoa.idade, pessoa.cpf, pessoa.id])
+    const sql = "UPDATE criancas SET pernome=?,peridade=?, percpf=? WHERE id=?;"
+    return await conexao.query(sql, [interno.nome, interno.rg, interno.cpf, interno.nasc, interno.stats, interno.pais, interno.bpc, interno.entra, interno.sai, interno.motivo, interno.encaminhado, interno.acomp, interno.autos, interno.sexo])
 }
 
-module.exports = { listarPessoas, inserirPessoa, apagarPessoa, recuperarPessoa, alterarPessoa }
+module.exports = { listarCadastros, inserirInterno, apagarInterno, recuperarInterno, alterarInterno }
