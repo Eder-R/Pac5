@@ -22,9 +22,10 @@ async function conectarBD()
     return global.connection
 }
 
+
 async function listarCadastros(){
     const conexao = await conectarBD()
-    const [registros] = await conexao.query('select * from criancas;')
+    const [registros] = await conexao.query('select * from criancas ;')
     return registros
 }
 
