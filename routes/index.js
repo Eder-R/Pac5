@@ -6,7 +6,7 @@ router.get('/', async function(req, res) {
   try {
     console.log('Amém!')
     const registros = await global.db.listarCadastros()
-    res.render('index', { registros });
+    res.render('/index', { registros });
   } catch(err){
     res.redirect('/?erro='+err)
   }
